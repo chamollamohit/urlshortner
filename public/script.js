@@ -10,7 +10,7 @@ const copyButton = document.getElementById('copy-button');
 
 // --- API Endpoint ---
 
-const API_ENDPOINT = 'http://localhost:3000/api/v1/create';
+const API_ENDPOINT = "/api/v1/create";
 
 // --- Event Listeners ---
 shortenForm.addEventListener('submit', handleFormSubmit);

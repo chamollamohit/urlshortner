@@ -8,7 +8,7 @@ import {short_Url} from "./src/model/shortUrl.model.js"
 dotenv.config("./env")
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // Common middlewares
 app.use(express.json()) // It takes the whatever data coming in JSON and convert into JS Object and attach with req.body and move it forward

@@ -35,7 +35,7 @@ npm install
 
 # 3. Set up your environment
 # (Just copy the example file and fill in your details)
-cp .env.example .env
+cp .example.env
 
 # 4. Blast off!
 npm run dev

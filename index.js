@@ -12,9 +12,14 @@ const port = process.env.PORT || 3000
 
 // Common middlewares
 app.use(express.json()) // It takes the whatever data coming in JSON and convert into JS Object and attach with req.body and move it forward
+
 app.use(express.urlencoded({extended:true})) // It takes the whatever Form data coming from HTML form and convert into JS Object and attach with req.body and move it forward
-app.use(express.static("public"))
-app.use(cors()); // Allow all cross-origin requests
+
+app.use(express.static("public")) // Tell the broswer where the static files are so that browser can render that 
+
+app.use(cors({
+    origin: process.env.CORS_ORIGIN
+})); // Use to tell only take request from frontend url which are mentioned 
 
 // Import Route
 import redirectFromShortUrl from "./src/route/urlShortner.route.js"

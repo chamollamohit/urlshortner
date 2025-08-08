@@ -5,12 +5,10 @@
 
 A sleek and simple full-stack app to shrink your long URLs into tiny, shareable links. Built with the MERN stack in mind, but with a lightweight vanilla JS frontend.
 
----
-**
 
-*(Tip: Record a quick GIF of you using the app and drag it here!)*
 
-### **[🚀 Try the Live Demo!](https://your-service-name.onrender.com)** *(Replace with your actual Render URL)*
+
+### **[🚀 Try the Live Demo!](https://urlshortner-jgzh.onrender.com/)** 
 
 ---
 
@@ -29,8 +27,8 @@ Ready to run the project locally? Just follow these steps.
 
 ```bash
 # 1. Clone this project
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-cd your-repo-name
+git clone [https://github.com/chamollamohit/urlshortner](https://github.com/chamollamohit/urlshortner)
+cd urlshortner
 
 # 2. Install all the needed packages
 npm install

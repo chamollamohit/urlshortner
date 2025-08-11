@@ -1,38 +1,32 @@
-import express from "express"
-import cors from 'cors';
-import dotenv from 'dotenv'
-import connectDB from "./src/db/db.js";
-import {short_Url} from "./src/model/shortUrl.model.js"
-
+import express from "express";
+import dotenv  from "dotenv";
+import { connectDB } from "./src/db/db.js";
+import path  from "path";
+import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
 
 dotenv.config("./env")
-
+const PORT = process.env.PORT
 const app = express()
-const port = process.env.PORT || 3000
-
-// Common middlewares
-app.use(express.json()) // It takes the whatever data coming in JSON and convert into JS Object and attach with req.body and move it forward
-
-app.use(express.urlencoded({extended:true})) // It takes the whatever Form data coming from HTML form and convert into JS Object and attach with req.body and move it forward
-
-app.use(express.static("public")) // Tell the broswer where the static files are so that browser can render that 
-
-app.use(cors({
-    origin: process.env.CORS_ORIGIN
-})); // Use to tell only take request from frontend url which are mentioned 
-
-// Import Route
-import redirectFromShortUrl from "./src/route/urlShortner.route.js"
-import createUrlshortner from "./src/route/createShortUrl.route.js"
+const __filename = fileURLToPath(import.meta.url) 
+const __dirName = path.dirname(__filename)
 
 
-// Routes
-app.use("/",redirectFromShortUrl )
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
+app.use(cookieParser())
+app.set("view engine", "ejs")
+app.set('views', path.join(__dirName,"views"))
+app.use(express.static(path.join(__dirName,"public")))
 
-app.use("/api/v1/",createUrlshortner) 
+// Impprorting Routes
+import staticRoute from "./src/routes/static.route.js";
 
 
-app.listen(port, () => {
+// Forwarding all request to defined routes
+app.use('/',staticRoute)
+
+app.listen(PORT, ()=> {
+    console.log("Server listening on:",PORT);
     connectDB()
-    console.log(`Server is listening on port ${port}`)
 })

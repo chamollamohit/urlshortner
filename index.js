@@ -32,4 +32,5 @@ app.use('/',staticRoute)
 app.listen(PORT, ()=> {
     console.log("Server listening on:",PORT);
     connectDB()
+
 })

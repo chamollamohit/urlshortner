@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* A little extra styling for the focus effect */
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+            border-color: rgba(99, 102, 241, 1);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-lg">
+
+        <div id="message-div" class="hidden p-4 rounded-md">
+            <p id="message-text"></p>
+        </div>
+        <div id="login-form">
+            <h2 class="text-3xl font-extrabold text-center text-gray-900">
+                Welcome Back!
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Log in to continue
+            </p>
+
+            <form class="mt-8 space-y-6" id="loginForm" method="POST">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="login-username" class="sr-only">Username</label>
+                        <input id="login-username" name="username" type="text" autocomplete="username" required
+                            class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:z-10 sm:text-sm form-input transition duration-150 ease-in-out"
+                            placeholder="Username">
+                    </div>
+                    <div>
+                        <label for="login-password" class="sr-only">Password</label>
+                        <input id="login-password" name="password" type="password" autocomplete="current-password"
+                            required
+                            class="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:z-10 sm:text-sm form-input transition duration-150 ease-in-out"
+                            placeholder="Password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+            <p class="mt-6 text-center text-sm text-gray-600">
+                Not a member?
+                <a href="#" id="show-register" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Sign up
+                </a>
+            </p>
+        </div>
+
+        <div id="register-form" class="hidden">
+            <h2 class="text-3xl font-extrabold text-center text-gray-900">
+                Create an Account
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                Join us today!
+            </p>
+
+            <form class="mt-8 space-y-6" id="registerForm" method="POST">
+                <div class="rounded-md shadow-sm">
+                    <div class="mb-4">
+                        <label for="register-name" class="sr-only">Full Name</label>
+                        <input id="register-name" name="name" type="text" autocomplete="name" required
+                            class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm form-input transition duration-150 ease-in-out"
+                            placeholder="Full Name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-username" class="sr-only">Username</label>
+                        <input id="register-username" name="username" type="text" autocomplete="username" required
+                            class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm form-input transition duration-150 ease-in-out"
+                            placeholder="Username">
+                    </div>
+                    <div>
+                        <label for="register-password" class="sr-only">Password</label>
+                        <input id="register-password" name="password" type="password" autocomplete="new-password"
+                            required
+                            class="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:z-10 sm:text-sm form-input transition duration-150 ease-in-out"
+                            placeholder="Password">
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                        Sign up
+                    </button>
+                </div>
+            </form>
+            <p class="mt-6 text-center text-sm text-gray-600">
+                Already have an account?
+                <a href="#" id="show-login" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    Log in
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const showRegisterLink = document.getElementById('show-register');
+        const showLoginLink = document.getElementById('show-login');
+        const submitRegister = document.getElementById('registerForm');
+        const submitLogin = document.getElementById('loginForm');
+
+        // ===== NEW: References for the message div =====
+        const messageDiv = document.getElementById('message-div');
+        const messageText = document.getElementById('message-text');
+
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            messageDiv.classList.add('hidden'); // Hide message when switching forms
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+        });
+
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            messageDiv.classList.add('hidden'); // Hide message when switching forms
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        });
+
+        //Register form submission
+        submitRegister.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+            const name = e.target.name.value;
+
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, password, name}),
+            });
+            if (response.ok) {
+                showMessage('Registration successful! Please log in.', 'success');
+                setTimeout(() => {
+                    registerForm.classList.add('hidden');
+                    loginForm.classList.remove('hidden');
+                }, 1500);
+            } else {
+                showMessage('Registration failed. Please try again.', 'error');
+            }
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = e.target.username.value;
+            const password = e.target.password.value;
+
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({username, password}),
+            });
+
+            if (response.ok) {
+                showMessage('Login successful! Redirecting...', 'success');
+                setTimeout(() => {
+                    window.location.href = '/dashboard';
+                }, 1000);
+            } else {
+                showMessage('Invalid username or password.', 'error');
+            }
+        });
+
+
+        // ===== NEW: Helper function to show messages =====
+
+        function showMessage(message, type) {
+            messageText.innerText = message;
+            
+            // Set color based on type
+            if (type === 'success') {
+                messageDiv.classList.remove('bg-red-100', 'text-red-700');
+                messageDiv.classList.add('bg-green-100', 'text-green-700');
+            } else { // 'error'
+                messageDiv.classList.remove('bg-green-100', 'text-green-700');
+                messageDiv.classList.add('bg-red-100', 'text-red-700');
+            }
+
+            // Make the div visible
+            messageDiv.classList.remove('hidden');
+        }
+
+    </script>
+
+</body>
+</html>
